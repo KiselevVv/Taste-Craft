@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'users.apps.UsersConfig',
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+    'recipes.apps.RecipesConfig'
 ]
 
 MIDDLEWARE = [
@@ -164,3 +165,6 @@ SLUG_LENGTH = 50
 NAME_PASS_LENGTH = 150
 EMAIL_LENGTH = 254
 LIST_PER_PAGE = 10
+RECIPE_LENGTH = 200
+HEX_LENGTH = 7
+MEASUREMENT_LENGTH = 24
