@@ -96,7 +96,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 6,
 }
 
 # Password validation
@@ -168,3 +168,4 @@ LIST_PER_PAGE = 10
 RECIPE_LENGTH = 200
 HEX_LENGTH = 7
 MEASUREMENT_LENGTH = 24
+COOKING_TIME = 0

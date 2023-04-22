@@ -6,7 +6,6 @@ from .models import User, Subscription
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    """Класс настройки раздела пользователей в админке."""
 
     list_display = (
         'pk',

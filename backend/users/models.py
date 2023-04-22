@@ -6,7 +6,6 @@ from .validators import validate_username
 
 
 class User(AbstractUser):
-    """Класс для переопределения модели пользователя."""
 
     username = models.CharField(
         max_length=settings.NAME_PASS_LENGTH,
