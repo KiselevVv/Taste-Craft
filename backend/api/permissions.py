@@ -6,8 +6,8 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return (
-                request.user.is_authenticated,
-                request.user.is_superuser,
+                request.user.is_authenticated and
+                request.user.is_superuser and
                 request.user.is_active or
                 request.method in permissions.SAFE_METHODS
         )

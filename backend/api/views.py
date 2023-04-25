@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
@@ -162,28 +163,16 @@ class RecipesViewSet(ModelViewSet):
         ingredients = Cart.objects.filter(
             user=request.user.id).values_list(
             'recipe__ingredients__name',
-            'recipe__ingredients__measurement_unit',
-            'recipe__recipeingredient__amount')
-
-        shopping_cart = {}
-        for ingredient in ingredients:
-            name = ingredient[0]
-            if name not in shopping_cart:
-                shopping_cart[name] = {
-                    'measurement_unit': ingredient[1],
-                    'amount': ingredient[2]
-                }
-            else:
-                shopping_cart[name]['amount'] += ingredient[2]
+            'recipe__ingredients__measurement_unit'
+        ).annotate(ingredient_amount=Sum('recipe__recipeingredient__amount'))
 
         response = HttpResponse(content_type='text/plain')
         response[
             'Content-Disposition'] = 'attachment; filename="shopping_cart.txt"'
 
-        for item in shopping_cart:
+        for item in ingredients:
             response.write(
-                f"* {item} ({shopping_cart[item]['measurement_unit']}) — "
-                f"{shopping_cart[item]['amount']}\n"
+                f"* {item[0]} ({item[1]}) — {item[2]}\n"
             )
 
         return response
