@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
 from recipes.models import Tag, Ingredient, Recipe, Favorite, Cart
-from .filters import TagFilter
+from .filters import TagFilter, IngredientSearchFilter
 from .permissions import IsAdminOrReadOnly
 from .serializers import (SubscriptionSerializer, TagSerializer,
                           IngredientSerializer, RecipeCreateUpdateSerializer,
@@ -73,6 +73,8 @@ class IngredientViewSet(ReadOnlyModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
     pagination_class = None
+    filter_backends = (IngredientSearchFilter,)
+    search_fields = ('^name',)
 
 
 class RecipesViewSet(ModelViewSet):
