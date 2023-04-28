@@ -1,7 +1,6 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Exists, OuterRef
-from django.conf import settings
-
 from recipes.validators import validate_color
 from users.models import User
 

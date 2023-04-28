@@ -133,3 +133,4 @@ dmypy.json
 /backend/data/
 /frontend/node_modules/
 /backend/media/
+/backend/dump.json

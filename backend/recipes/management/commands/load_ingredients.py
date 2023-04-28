@@ -4,7 +4,6 @@ import os
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
-
 from recipes.models import Ingredient
 
 path = os.path.join(settings.BASE_DIR, 'data')
@@ -17,7 +16,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         add_count = 0
         error_count = 0
-        for row in csv.DictReader(open(f'{path}/ingredients.csv')):
+        for row in csv.DictReader(open(
+                f'{path}/ingredients.csv',
+                encoding='utf-8')
+        ):
             try:
                 obj, created = Ingredient.objects.get_or_create(
                     name=row['name'],

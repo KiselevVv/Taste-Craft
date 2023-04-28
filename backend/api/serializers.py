@@ -1,11 +1,8 @@
 import base64
 
 from django.core.files.base import ContentFile
-from django.shortcuts import get_object_or_404
 from djoser.serializers import UserCreateSerializer, UserSerializer
-
 from rest_framework import serializers
-
 from users.models import User, Subscription
 from recipes.models import Tag, Ingredient, RecipeIngredient, Recipe
 
@@ -21,8 +18,8 @@ class CustomUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, obj):
         user = self.context['request'].user
-        return (user.is_authenticated and
-                obj.subscribed_to.filter(subscriber=user).exists())
+        return (user.is_authenticated
+                and obj.subscribed_to.filter(subscriber=user).exists())
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
