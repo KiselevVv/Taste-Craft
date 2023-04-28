@@ -7,7 +7,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ../backend/.env
+      - ./.env
 
   backend:
     image: kislevvv/foodgram_backend:latest
@@ -16,7 +16,7 @@ services:
       - static_value:/app/static/
       - media_value:/app/media/
     env_file:
-      - ../backend/.env
+      - ./.env
     depends_on:
       - db
 
