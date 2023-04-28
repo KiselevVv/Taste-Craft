@@ -1,2 +1,2 @@
-# praktikum_new_diplom
+# praktikum_new_diplom.
 [![.github/workflows/foodgram_workflow.yml](https://github.com/KiselevVv/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)](https://github.com/KiselevVv/foodgram-project-react/actions/workflows/foodgram_workflow.yml)
