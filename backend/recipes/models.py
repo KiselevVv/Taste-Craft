@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Exists, OuterRef
 from recipes.validators import validate_color
@@ -126,7 +127,11 @@ class Recipe(models.Model):
 
 class RecipeIngredient(models.Model):
     amount = models.PositiveIntegerField(
-        verbose_name='Количество'
+        verbose_name='Количество',
+        validators=[
+            MaxValueValidator(100000),
+            MinValueValidator(1)
+        ]
     )
     ingredient = models.ForeignKey(
         Ingredient,
