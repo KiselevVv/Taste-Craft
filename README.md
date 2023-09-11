@@ -1,11 +1,11 @@
-# Foodgram
-[![.github/workflows/foodgram_workflow.yml](https://github.com/KiselevVv/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)](https://github.com/KiselevVv/foodgram-project-react/actions/workflows/foodgram_workflow.yml)
+# Taste Craft
+[![.github/workflows/foodgram_workflow.yml](https://github.com/KiselevVv/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)](https://github.com/KiselevVv/Taste-Craft/actions/workflows/foodgram_workflow.yml)
 
 ## Описание
 
-Сервис, в котором пользователи могут публиковать рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Также у пользователей есть возможность создавать список продуктов, которые нужно купить для приготовления выбранных блюд, и загружать его в формате TXT.
+Онлайн-платформа по обмену кулинарными идеями и рецептами. Пользователи могут делиться своими гастрономическими открытиями, сохранять интересные рецепты, а также составлять списки продуктов для покупки в текстовом формате.
 
-В рамках учебного проекта был разработан backend сервиса и настроен CI/CD.
+Разработан backend сервиса и настроен CI/CD.
 
 ## Доступ
 
