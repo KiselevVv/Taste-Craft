@@ -19,9 +19,11 @@ from users.models import User, Subscription
 
 
 class SubscriptionsListViewSet(viewsets.GenericViewSet):
+    """Вьюсет для списка подписок пользователя."""
     permission_classes = (IsAuthenticated,)
 
     def list(self, request):
+        """Получает список подписок пользователя."""
         queryset = User.objects.filter(subscribed_to__subscriber=request.user)
         pages = self.paginate_queryset(queryset)
         serializer = UserSubscribeSerializer(
@@ -33,9 +35,11 @@ class SubscriptionsListViewSet(viewsets.GenericViewSet):
 
 
 class SubscribeViewSet(viewsets.GenericViewSet):
+    """Вьюсет для управления подписками."""
     permission_classes = (IsAuthenticated,)
 
     def create(self, request, user_id=None):
+        """Создает подписку на автора."""
         subscriber = request.user
         subscribed_to = get_object_or_404(User, pk=user_id)
         if subscriber == subscribed_to:
@@ -54,6 +58,7 @@ class SubscribeViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id=None):
+        """Удаляет подписку на автора."""
         subscribed_to = get_object_or_404(User, pk=user_id)
         get_object_or_404(Subscription, subscriber=request.user,
                           subscribed_to=subscribed_to).delete()
@@ -61,6 +66,7 @@ class SubscribeViewSet(viewsets.GenericViewSet):
 
 
 class TagViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для тегов рецептов."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -68,6 +74,7 @@ class TagViewSet(ReadOnlyModelViewSet):
 
 
 class IngredientViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для ингредиентов."""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -77,6 +84,7 @@ class IngredientViewSet(ReadOnlyModelViewSet):
 
 
 class RecipesViewSet(ModelViewSet):
+    """Вьюсет для рецептов."""
     queryset = Recipe.objects.all()
     http_method_names = ['get', 'post', 'patch', 'delete']
     permission_classes = (IsOwnerOrReadOnly,)
@@ -84,14 +92,17 @@ class RecipesViewSet(ModelViewSet):
     filter_class = TagFilter
 
     def perform_create(self, serializer):
+        """Метод для создания рецепта."""
         serializer.save(author=self.request.user)
 
     def get_serializer_class(self):
+        """Метод для выбора сериализатора."""
         if self.action in ('create', 'update', 'partial_update'):
             return RecipeCreateUpdateSerializer
         return RecipeListSerializer
 
     def get_queryset(self):
+        """Метод для получения списка рецептов."""
         qs = Recipe.objects.add_user_annotations(self.request.user.pk)
         is_favorited = self.request.query_params.get('is_favorited')
         is_in_shopping_cart = self.request.query_params.get(
@@ -112,6 +123,10 @@ class RecipesViewSet(ModelViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def favorite(self, request, **kwargs):
+        """
+        Метод для добавления или удаления рецепта из избранного
+        пользователя.
+        """
         recipe = get_object_or_404(Recipe, id=kwargs['pk'])
 
         if request.method == 'POST':
@@ -136,6 +151,10 @@ class RecipesViewSet(ModelViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def shopping_cart(self, request, **kwargs):
+        """
+        Метод для добавления или удаления рецепта из списка покупок
+        пользователя.
+        """
         recipe = get_object_or_404(Recipe, id=kwargs['pk'])
 
         if request.method == 'POST':
@@ -161,6 +180,10 @@ class RecipesViewSet(ModelViewSet):
         permission_classes=(IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
+        """
+        Метод для скачивания списка покупок пользователя в виде текстового
+        файла.
+        """
         ingredients = Cart.objects.filter(
             user=request.user.id).values_list(
             'recipe__ingredients__name',

@@ -7,6 +7,14 @@ from users.models import User
 
 
 class Tag(models.Model):
+    """
+    Модель для тегов рецептов.
+
+    Поля:
+    - name (CharField): Название тега.
+    - color (CharField): Цвет тега в формате HEX.
+    - slug (CharField): Уникальный слаг тега.
+    """
     name = models.CharField(
         max_length=settings.RECIPE_LENGTH,
         unique=True,
@@ -34,6 +42,13 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
+    """
+    Модель для ингредиентов.
+
+    Поля:
+    - name (CharField): Название ингредиента.
+    - measurement_unit (CharField): Единица измерения для ингредиента.
+    """
     name = models.CharField(
         max_length=settings.RECIPE_LENGTH,
         unique=True,
@@ -59,7 +74,9 @@ class Ingredient(models.Model):
 
 
 class RecipeQuerySet(models.QuerySet):
-
+    """
+     Менеджер запросов для модели Recipe.
+    """
     def add_user_annotations(self, user_id):
         return self.annotate(
             is_favorited=Exists(
@@ -76,6 +93,19 @@ class RecipeQuerySet(models.QuerySet):
 
 
 class Recipe(models.Model):
+    """
+    Модель для рецептов.
+
+    Поля:
+    - tags (ManyToManyField): Теги, связанные с рецептом.
+    - author (ForeignKey): Автор рецепта.
+    - ingredients (ManyToManyField): Ингредиенты, связанные с рецептом.
+    - name (CharField): Название рецепта.
+    - image (ImageField): Картинка рецепта.
+    - text (TextField): Текст рецепта.
+    - cooking_time (PositiveSmallIntegerField): Время приготовления рецепта.
+    - pub_date (DateTimeField): Дата публикации рецепта.
+    """
     tags = models.ManyToManyField(
         Tag,
         related_name='recipes',
@@ -126,6 +156,14 @@ class Recipe(models.Model):
 
 
 class RecipeIngredient(models.Model):
+    """
+    Модель для ингредиентов в рецептах.
+
+    Поля:
+    - amount (PositiveIntegerField): Количество ингредиента в рецепте.
+    - ingredient (ForeignKey): Ингредиент.
+    - recipe (ForeignKey): Рецепт.
+    """
     amount = models.PositiveIntegerField(
         verbose_name='Количество',
         validators=[
@@ -153,6 +191,13 @@ class RecipeIngredient(models.Model):
 
 
 class Favorite(models.Model):
+    """
+    Модель для избранных рецептов пользователей.
+
+    Поля:
+    - user (ForeignKey): Пользователь.
+    - recipe (ForeignKey): Рецепт.
+    """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -181,6 +226,13 @@ class Favorite(models.Model):
 
 
 class Cart(models.Model):
+    """
+    Модель для списка покупок пользователей.
+
+    Поля:
+    - user (ForeignKey): Пользователь.
+    - recipe (ForeignKey): Рецепт.
+    """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

@@ -5,6 +5,7 @@ from users.models import User
 
 
 class TagFilter(FilterSet):
+    """Фильтр для рецептов по тегам и авторам."""
     tags = filters.ModelMultipleChoiceFilter(
         field_name='tags__slug',
         to_field_name='slug',
@@ -18,4 +19,5 @@ class TagFilter(FilterSet):
 
 
 class IngredientSearchFilter(SearchFilter):
+    """Фильтр для ингредиентов по названию."""
     search_param = 'name'

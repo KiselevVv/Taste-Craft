@@ -9,11 +9,22 @@ admin.site.register(Cart)
 
 
 class IngredientTabular(admin.TabularInline):
+    """Инлайн-форма для ингредиентов в административной панели рецептов."""
     model = RecipeIngredient
 
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
+    """
+    Административная панель для модели Recipe.
+
+    Список отображаемых полей:
+    - 'pk': Идентификатор рецепта.
+    - 'author': Автор рецепта.
+    - 'name': Название рецепта.
+    - 'pub_date': Дата публикации рецепта.
+    - 'count_favorites': Количество избранных рецептов.
+    """
     list_display = (
         'pk',
         'author',
@@ -34,4 +45,5 @@ class RecipeAdmin(admin.ModelAdmin):
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
+    """Административная панель для модели Ingredient."""
     search_fields = ('name',)

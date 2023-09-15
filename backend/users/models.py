@@ -6,7 +6,16 @@ from .validators import validate_username
 
 
 class User(AbstractUser):
+    """
+    Пользователь в системе.
 
+    Поля:
+    - username (CharField): Уникальное имя пользователя.
+    - password (CharField): Пароль пользователя.
+    - email (EmailField): Уникальный адрес электронной почты.
+    - first_name (CharField): Имя пользователя.
+    - last_name (CharField): Фамилия пользователя.
+    """
     username = models.CharField(
         max_length=settings.NAME_PASS_LENGTH,
         unique=True,
@@ -43,6 +52,13 @@ class User(AbstractUser):
 
 
 class Subscription(models.Model):
+    """
+    Модель для отслеживания подписок пользователей на других пользователей.
+
+    Поля:
+    - subscriber (ForeignKey): Подписчик.
+    - subscribed_to (ForeignKey): Пользователь, на которого подписан подписчик.
+    """
     subscriber = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
